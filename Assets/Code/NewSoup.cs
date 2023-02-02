@@ -6,6 +6,7 @@ public class NewSoup : MonoBehaviour
 {
 
     public SoupPot soup;
+    public IngredientGrid ingredientGrid;
     public AudioSource Audio;
     public AudioClip DumpSound;
     public MooseButton button;
@@ -30,6 +31,9 @@ public class NewSoup : MonoBehaviour
         //Clear souppot CurrentGoodness
         soup.CurrentGoodness = 0;
 
+        //Clear soup ticks
+        ingredientGrid.ClearTicks();
+
         //Play sound
         Audio.PlayOneShot(DumpSound);
 
@@ -37,8 +41,7 @@ public class NewSoup : MonoBehaviour
         //TODO
 
         //Update time to boil
-        soup.StartTime = Time.time;
-        soup.TimetoBoil = soup.NewPotTime;
+        soup.currentTime = soup.StartingTime;
         soup.boiling = false;
         soup.Dump();
     }

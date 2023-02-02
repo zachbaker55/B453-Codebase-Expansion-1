@@ -30,6 +30,7 @@ public class Order : MonoBehaviour
     public SpriteRenderer IngredientRenderer;
     public SpriteRenderer Restriction;
     public SpriteRenderer IngredientCountRenderer;
+    public SpriteRenderer updateTick;
     public TextMeshPro IngredientCountText;
 
     public float zoom;
@@ -53,6 +54,12 @@ public class Order : MonoBehaviour
     {
         button.OverAction = OrderEnter;
         button.OutAction = OrderExit;
+
+        if (CheckOrder()) {
+            updateTick.enabled = true;
+        } else {
+            updateTick.enabled = false;
+        }
     }
 
     void OrderEnter()
@@ -175,6 +182,17 @@ public class Order : MonoBehaviour
             IngredientCountRenderer.enabled = false;
             IngredientCountText.text = string.Empty;
         }
+    }
+
+    public bool CheckOrder()
+    {
+        for(int i = 0; i< Requirements.Count; i++)
+        {
+            if (!Requirements[i].Evaluate(soup)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public void FillOrder()

@@ -10,6 +10,7 @@ public class Ingredient : MonoBehaviour
     public int Goodness;
     public bool AlreadyAdded;
     public Sprite sprite;
+    public SpriteRenderer tick;
     public SoupPot Soup;
     public MooseButton button;
     public AudioSource Audio;
@@ -46,6 +47,7 @@ public class Ingredient : MonoBehaviour
         if (zoom == 0f) zoom = 0.1f;
         transform.Rotate(Vector3.forward * angle);
         transform.localScale += new Vector3(zoom, zoom, zoom);
+
     }
 
     void IngredientExit()
@@ -61,7 +63,13 @@ public class Ingredient : MonoBehaviour
         if(Soup != null)
         {
             Soup.AddIngredient(this);
+            tick.enabled = true;
         }
+    }
+
+    public void ClearTicks()
+    {
+        tick.enabled = false; 
     }
 
 }

@@ -12,10 +12,10 @@ public class SoupPot : MonoBehaviour
     public AudioSource Audio;
     public AudioClip BoilingSound;
     public AudioClip SplashSound;
-    public float StartTime;
-    public float TimetoBoil; 
+    public float StartingTime; 
+    [HideInInspector] public float currentTime;
     public float EachIngredientTime;
-    public float NewPotTime;
+    public float BoilTime;
     public bool boiling = false;
     public SpriteRenderer PotRenderer;
     public List<Sprite> PotSprites;
@@ -38,8 +38,7 @@ public class SoupPot : MonoBehaviour
 
     public void StartLevel()
     {
-        StartTime = Time.time;
-        TimetoBoil = NewPotTime;
+        currentTime = StartingTime;
         LevelStarted = true;
     }
 
@@ -58,7 +57,8 @@ public class SoupPot : MonoBehaviour
         Ingredients.Add(ingredient);
 
         //Do new ingredients increase the time needed to boil?
-        TimetoBoil += EachIngredientTime;
+        currentTime -= EachIngredientTime;
+        if (currentTime < 0) {currentTime = 0;} 
 
         Audio.PlayOneShot(SplashSound);
 
@@ -95,14 +95,14 @@ public class SoupPot : MonoBehaviour
 
     public void UpdateBubbling()
     {
+        currentTime += Time.deltaTime;
+        if (currentTime > BoilTime) {currentTime = BoilTime;} 
         //Timer for soup bubbling
-        if (Time.time > StartTime + TimetoBoil)
+        if (currentTime >= BoilTime)
         {
             //boilin
             //Debug.Log("boilin");
             boiling = true;
-            TimetoBoil = 0;
-            StartTime = Time.time;
             Audio.clip = BoilingSound;
             if (!Audio.isPlaying) Audio.Play();
         }
@@ -112,7 +112,7 @@ public class SoupPot : MonoBehaviour
             boiling = false;
             Audio.clip = null;
         }
-
+        //Debug.Log(currentTime);
         BoilingRenderer.enabled = boiling;
 
     }

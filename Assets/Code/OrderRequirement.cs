@@ -20,19 +20,19 @@ public class OrderRequirement
     {
         if(GoodnessScore != -1000)
         {
-            Debug.Log("Checking if the Soup's goodness of " + soup.CurrentGoodness + " matches " + GoodnessScore);
+            //Debug.Log("Checking if the Soup's goodness of " + soup.CurrentGoodness + " matches " + GoodnessScore);
             return GoodnessScore == soup.CurrentGoodness;
         }
         if(ingredientCount != 0)
         {
             if (Required)
             {
-                Debug.Log("Checking That soup contains at least " + ingredientCount + " ingredients");
+                //Debug.Log("Checking That soup contains at least " + ingredientCount + " ingredients");
                 return ingredientCount <= soup.Ingredients.Count;
             }
             else if (Restricted)
             {
-                Debug.Log("Checking That soup contains no more than " + ingredientCount + " ingredients");
+                //Debug.Log("Checking That soup contains no more than " + ingredientCount + " ingredients");
                 return ingredientCount >= soup.Ingredients.Count;
             }
         }
@@ -40,16 +40,16 @@ public class OrderRequirement
         {
             if (Required)
             {
-                Debug.Log("Checking That soup contains " + ingredient);
+                //Debug.Log("Checking That soup contains " + ingredient);
                 return soup.Ingredients.Contains(ingredient);
             }
             if (Restricted)
             {
-                Debug.Log("Checking That soup does not contain " + ingredient);
+                //Debug.Log("Checking That soup does not contain " + ingredient);
                 return !soup.Ingredients.Contains(ingredient);
             }
         }
-        Debug.Log("Default evaluation - True");
+        //Debug.Log("Default evaluation - True");
         return true;
     }
 
